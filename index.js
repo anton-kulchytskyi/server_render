@@ -4,7 +4,7 @@ const app = express();
 const PORT = process.env.PORT || 8081;
 
 app.get('/', async (req, res) => {
-  const username = req.query.username || 'myogeshchavan97';
+  const username = req.query.username || 'anton-kulchytskyi';
   try {
     const result = await axios.get(
       `https://api.github.com/users/${username}/repos`
@@ -13,10 +13,11 @@ app.get('/', async (req, res) => {
       .map((repo) => ({
         name: repo.name,
         url: repo.html_url,
-        description: repo.description,
-        stars: repo.stargazers_count
+        // description: repo.description,
+        // stars: repo.stargazers_count
       }))
-      .sort((a, b) => b.stars - a.stars);
+      .slice(0, 5)
+      // .sort((a, b) => b.stars - a.stars);
 
     res.send(repos);
   } catch (error) {
